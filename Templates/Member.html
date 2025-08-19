@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap Limit Upgrades</title>
+</head>
+<body>
+    <h1>Tap Limit Upgrades</h1>
+    <p>Current Score: {{ score }}</p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul style="color: red;">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <h2>Tap Limit Upgrades</h2>
+    <ul>
+        {% for upgrade_id, upgrade in upgrades.items() %}
+            <li>
+                {{ upgrade.name }} - Cost: {{ upgrade.cost }}
+                {% if upgrade_id in purchased_upgrades %}
+                    - Already Purchased
+                {% else %}
+                    <form method="post" action="{{ url_for('buy_limit_upgrade', upgrade_id=upgrade_id) }}">
+                        <button type="submit">Buy</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <br>
+    <a href="{{ url_for('game') }}">Back to Game</a>
+</body>
+</html>
