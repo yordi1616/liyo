@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Task</title>
+</head>
+<body>
+    <h1>Complete Task</h1>
+    <p>Current Score: {{ score }}</p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul style="color: red;">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% if task_completed %}
+        <p>This task has already been completed!</p>
+    {% else %}
+        <p>Who is the creator of this game?</p>
+        <form method="post" action="{{ url_for('complete_task') }}">
+            <input type="text" name="answer" required>
+            <button type="submit">Submit Answer</button>
+        </form>
+    {% endif %}
+    
+    <br>
+    <a href="{{ url_for('game') }}">Back to Game</a>
+</body>
+</html>
