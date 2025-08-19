@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game</title>
+</head>
+<body>
+    <h1>Hello, {{ username }}!</h1>
+    <p>Score: <span id="score">{{ score }}</span></p>
+    <p>Taps Left: <span id="taps_left">{{ taps_left }}</span> / {{ current_tap_limit }}</p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul style="color: red;">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    
+    {% if show_daily_bonus %}
+        <form method="post" action="{{ url_for('claim_daily_bonus') }}">
+            <button type="submit">Claim Daily Bonus (1000 points)</button>
+        </form>
+        <br>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('click') }}">
+        <button type="submit">Tap Me!</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('earn_page') }}">Earn</a> | 
+    <a href="{{ url_for('members_page') }}">Members</a> |
+    <a href="{{ url_for('task_page') }}">Task</a>
+</body>
+</html>
